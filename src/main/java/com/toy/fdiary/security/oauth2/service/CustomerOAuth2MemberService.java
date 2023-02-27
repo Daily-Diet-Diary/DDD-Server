@@ -4,7 +4,6 @@ package com.toy.fdiary.security.oauth2.service;
 import com.toy.fdiary.error.exception.AuthException;
 import com.toy.fdiary.error.type.AuthErrorCode;
 import com.toy.fdiary.member.model.entity.Member;
-import com.toy.fdiary.member.model.type.MemberRole;
 import com.toy.fdiary.member.model.type.MemberStatus;
 import com.toy.fdiary.member.repository.MemberRepository;
 import com.toy.fdiary.security.auth.PrincipalDetail;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -80,7 +78,6 @@ public class CustomerOAuth2MemberService extends DefaultOAuth2UserService {
                 .email(memberInfo.getEmail())
                 .name(memberInfo.getName())
                 .nickname(providerType+"_"+ uuid)
-                .role(MemberRole.ROLE_USER)
                 .providerType(providerType)
                 .status(MemberStatus.ING)
                 .providerId(memberInfo.getProviderId())

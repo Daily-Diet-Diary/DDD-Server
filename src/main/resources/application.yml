@@ -12,7 +12,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/ESC?serverTimezone=Asia/Seoul #테이블 변경하기
+    url: jdbc:mysql://localhost:3307/Diary?serverTimezone=Asia/Seoul #테이블 변경하기
     username: root
     password: 1
 

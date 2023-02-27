@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/members/signUp","/members/auth/login","/members/email-dup","/members/email-auth","/members/email-authentication", "/members/profiles/password/**").permitAll()
+                .antMatchers("/signUp","/members/auth/login").permitAll()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)

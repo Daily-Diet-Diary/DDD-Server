@@ -1,6 +1,5 @@
 package com.toy.fdiary.member.model.entity;
 
-import com.toy.fdiary.member.model.type.MemberRole;
 import com.toy.fdiary.member.model.type.MemberStatus;
 import com.toy.fdiary.security.oauth2.type.ProviderType;
 import io.jsonwebtoken.Claims;
@@ -33,9 +32,6 @@ public class Member {
     private MemberStatus status;
 
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
-
-    @Enumerated(EnumType.STRING)
     private ProviderType providerType; // 소셜 타입
 
     private String providerId;
@@ -45,6 +41,5 @@ public class Member {
     public Member(Claims claims) {
         this.memberId = Long.valueOf(claims.get("userId").toString());
         this.name = claims.get("name").toString();
-        this.role = MemberRole.valueOf(claims.get("role").toString());
     }
 }
