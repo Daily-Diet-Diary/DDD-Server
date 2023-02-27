@@ -1,6 +1,5 @@
 package com.toy.fdiary.diary.controller;
 
-import com.toy.fdiary.diary.model.dto.DiaryReadDto;
 import com.toy.fdiary.diary.model.dto.DiaryReadDto.Response;
 import com.toy.fdiary.diary.model.dto.DiarySaveDto;
 import com.toy.fdiary.diary.service.DiaryService;
@@ -27,6 +26,13 @@ public class DiaryController {
         Member member = principalDetail.getMember();
         List<Response> diaries = diaryService.read(date,member);
         return ResponseEntity.ok(diaries);
+    }
+    @GetMapping("/{date}/{mealTime}")
+    public ResponseEntity<?> selectOneDiary(@PathVariable String date, @PathVariable String mealTime,
+                                            @AuthenticationPrincipal PrincipalDetail principalDetail){
+        Member member = principalDetail.getMember();
+        Response result = diaryService.selectOneRead(date,mealTime,member);
+        return ResponseEntity.ok(result);
     }
     @PostMapping("/{date}/{mealTime}/save")
     public ResponseEntity<?> saveDiary(@PathVariable String date,

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum DiaryErrorCode {
     DiaryAlreadyExist(HttpStatus.BAD_REQUEST,"이미 해당 시간대의 다이어리가 존재합니다."),
+    DiaryNotFound(HttpStatus.FOUND, "해당 다이어리는 존재하지 않습니다."),
     DiaryMealTimeNotMatched(HttpStatus.BAD_REQUEST, "식사 시간대 정보가 올바르지 않습니다.");
 
 

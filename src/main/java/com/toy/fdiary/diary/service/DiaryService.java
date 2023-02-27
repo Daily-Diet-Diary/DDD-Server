@@ -28,16 +28,8 @@ public class DiaryService {
     public List<Response> read(String date, Member member) {
         List<Diary> diaries = repository.findAllByWriteDateAndMember(Date.valueOf(date),member);
         List<Response> result = new ArrayList<>();
-        for (int i = 0; i < diaries.size(); i++) {
-            Diary diary = diaries.get(i);
-            Response dto = Response.builder()
-                    .writeDate(diary.getWriteDate())
-                    .foodUrl(diary.getFoodUrl())
-                    .content(diary.getContent())
-                    .iconUrl(diary.getIconUrl())
-                    .mealTime(util.getMealTime(diary.getMealTime()))
-                    .foods(diary.getFoods())
-                    .build();
+        for (Diary diary : diaries) {
+            Response dto = Diary.toResponse(diary);
             result.add(dto);
         }
         return result;
@@ -71,11 +63,20 @@ public class DiaryService {
     }
     public List<Food> makeFoodEntity(List<DiarySaveDto.Food> foods){
         List<Food> result = new ArrayList<>();
-        for (int i = 0; i < foods.size(); i++) {
-            DiarySaveDto.Food request = foods.get(i);
-            Food food = new Food(request.getName(),request.getCalories(),request.getWeight());
+        for (DiarySaveDto.Food request : foods) {
+            Food food = new Food(request.getName(), request.getCalories(), request.getWeight());
             result.add(food);
         }
         return result;
+    }
+
+    public Response selectOneRead(String date, String mealTime, Member member) {
+        Optional<Diary> optional= repository.findByMemberAndWriteDateAndMealTime(
+                member,Date.valueOf(date),MealTime.valueOf(mealTime));
+        if(!optional.isPresent()){
+           throw new DiaryException(DiaryErrorCode.DiaryNotFound);
+        }
+        Diary diary = optional.get();
+        return Diary.toResponse(diary);
     }
 }
