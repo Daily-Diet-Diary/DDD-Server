@@ -11,7 +11,6 @@ import com.toy.fdiary.diary.repository.FoodRepository;
 import com.toy.fdiary.error.exception.DiaryException;
 import com.toy.fdiary.error.type.DiaryErrorCode;
 import com.toy.fdiary.member.model.entity.Member;
-import com.toy.fdiary.util.MealTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 public class DiaryService {
     private final DiaryRepository repository;
     private final FoodRepository foodRepository;
-    private final MealTimeUtil util;
 
 
     public List<Response> read(String date, Member member) {
@@ -77,7 +75,7 @@ public class DiaryService {
     public Response selectOneRead(String date, String mealTime, Member member) {
         Optional<Diary> optional= repository.findByMemberAndWriteDateAndMealTime(
                 member,Date.valueOf(date),MealTime.valueOf(mealTime));
-        if(!optional.isPresent()){
+        if(optional.isEmpty()){
            throw new DiaryException(DiaryErrorCode.DiaryNotFound);
         }
         Diary diary = optional.get();
@@ -86,7 +84,7 @@ public class DiaryService {
     //특정 다이어리 삭제 메소드
     public Map<String, String> delete(String date, String mealTime, Member member) {
         Optional<Diary> optional = repository.findByMemberAndWriteDateAndMealTime(member,Date.valueOf(date),MealTime.valueOf(mealTime));
-        if(!optional.isPresent()){
+        if(optional.isEmpty()){
             throw new DiaryException(DiaryErrorCode.DiaryNotFound);
         }
         Diary diary = optional.get();
@@ -109,7 +107,6 @@ public class DiaryService {
         }
         if(!diary.getFoodUrl().equals(dto.getFoodUrl())){
             diary.setFoodUrl(dto.getFoodUrl());
-            List<Food> oldList = diary.getFoods();
             foodRepository.deleteAllByDiary(diary);
             List<Food> foods = dto.getFoods().stream().map(food -> Food.builder()
                     .diary(diary).calories(food.getCalories()).name(food.getName())
