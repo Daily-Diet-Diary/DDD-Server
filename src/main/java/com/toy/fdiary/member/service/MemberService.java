@@ -11,7 +11,6 @@ import com.toy.fdiary.security.auth.redis.RefreshToken;
 import com.toy.fdiary.security.auth.redis.RefreshTokenRedisRepository;
 import com.toy.fdiary.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,10 +38,9 @@ public class MemberService {
         return null;
     }
     @Transactional
-    public LoginDto.Response login(LoginDto.Request loginDto) {
-        Member member = memberRepository.findByEmail(loginDto.getEmail()).
+    public LoginDto.Response login(String email) {
+        Member member = memberRepository.findByEmail(email).
                 orElseThrow(() -> new AuthException(MemberNotFound));
-        String email = member.getEmail();
         String accessToken = jwtTokenUtil.generateAccessToken(email);
         RefreshToken refreshToken = jwtTokenUtil.saveRefreshToken(email);
         return LoginDto.Response.of(member.getMemberId(), email, member.getNickname(), member.getImgUrl(), accessToken,refreshToken.getRefreshToken());

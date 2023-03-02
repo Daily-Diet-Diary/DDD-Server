@@ -3,7 +3,9 @@ package com.toy.fdiary.util;
 import com.toy.fdiary.diary.model.type.MealTime;
 import com.toy.fdiary.error.exception.DiaryException;
 import com.toy.fdiary.error.type.DiaryErrorCode;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MealTimeUtil {
     public String getMealTime(MealTime mealTime) {
         switch (mealTime){

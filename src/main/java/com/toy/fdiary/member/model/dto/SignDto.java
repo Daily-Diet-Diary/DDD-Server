@@ -11,7 +11,7 @@ public class SignDto {
     public static class Request {
         private String email;
         private String name;
-        private String nickname;
+        private String nickName;
         private String image;
     }
 
@@ -21,7 +21,7 @@ public class SignDto {
     @NoArgsConstructor
     public static class Response {
         private String name;
-        private String nickname;
+        private String nickName;
         private String image;
     }
 }

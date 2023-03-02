@@ -6,6 +6,7 @@ import com.toy.fdiary.error.exception.DiaryException;
 import com.toy.fdiary.error.type.DiaryErrorCode;
 import com.toy.fdiary.member.model.entity.Member;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Diary {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
     private Date writeDate;
     private String foodUrl;
@@ -31,20 +32,22 @@ public class Diary {
     @Enumerated(EnumType.STRING)
     private MealTime mealTime;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="memberId")
+    @JoinColumn(name = "memberId")
+    @ManyToOne
+    @JsonIgnore
     private Member member;
 
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "diary", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<Food> foods = new ArrayList<>();
 
     public static DiaryReadDto.Response toResponse(Diary diary) {
         return DiaryReadDto.Response.builder()
-                .writeDate(diary.getWriteDate())
+                .writeDate(String.valueOf(diary.getWriteDate()))
                 .foodUrl(diary.getFoodUrl())
                 .content(diary.getContent())
                 .iconUrl(diary.getIconUrl())
-                .mealTime(diary.getMealTime())
+                .mealTime(diary.getMealTime().toString())
                 .foods(diary.getFoods())
                 .build();
     }

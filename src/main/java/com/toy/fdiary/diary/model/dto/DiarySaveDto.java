@@ -16,8 +16,6 @@ public class DiarySaveDto {
     @ApiModel(value = "다이어리 저장 Request")
     public static class Request{
         private String iconUrl;
-        private String date;
-        private String mealTime;
         private String content;
         private String foodImgUrl;
         private List<Food> foods;

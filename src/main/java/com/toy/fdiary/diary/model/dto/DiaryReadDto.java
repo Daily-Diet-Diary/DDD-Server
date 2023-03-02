@@ -17,7 +17,7 @@ public class DiaryReadDto {
     @AllArgsConstructor
     @ApiModel(value="특정 요일 다이어리 가져오기")
     public static class Response{
-        private Date writeDate;
+        private String writeDate;
         private String foodUrl;
         private String content;
         private String iconUrl;

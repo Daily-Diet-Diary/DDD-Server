@@ -20,9 +20,13 @@ public class MemberController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/signUp")
-    public ResponseEntity<SignDto.Response> login(@RequestBody SignDto.Request request){
+    public ResponseEntity<SignDto.Response> signUp(@RequestBody SignDto.Request request){
         SignDto.Response result =  memberService.signUser(request);
         return ResponseEntity.ok(result);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String email){
+        return ResponseEntity.ok(memberService.login(email));
     }
 
 

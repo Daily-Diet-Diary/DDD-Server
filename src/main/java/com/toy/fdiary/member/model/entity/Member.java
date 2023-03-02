@@ -1,11 +1,15 @@
 package com.toy.fdiary.member.model.entity;
 
+import com.toy.fdiary.diary.model.entity.Diary;
 import com.toy.fdiary.member.model.type.MemberStatus;
 import com.toy.fdiary.security.oauth2.type.ProviderType;
 import io.jsonwebtoken.Claims;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -35,6 +39,10 @@ public class Member {
     private ProviderType providerType; // 소셜 타입
 
     private String providerId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Diary> diaries = new ArrayList<>();
 
 
 
