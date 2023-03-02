@@ -46,7 +46,7 @@ public class DiaryService {
         Diary diary = Diary.builder()
                 .member(member)
                 .writeDate(writeDate)
-                .foodUrl(request.getFoodImgUrl())
+                .foodUrl(request.getFoodUrl())
                 .content(request.getContent())
                 .iconUrl(request.getIconUrl())
                 .mealTime(time)

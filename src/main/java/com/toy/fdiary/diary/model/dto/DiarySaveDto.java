@@ -17,7 +17,7 @@ public class DiarySaveDto {
     public static class Request{
         private String iconUrl;
         private String content;
-        private String foodImgUrl;
+        private String foodUrl;
         private List<Food> foods;
     }
 
